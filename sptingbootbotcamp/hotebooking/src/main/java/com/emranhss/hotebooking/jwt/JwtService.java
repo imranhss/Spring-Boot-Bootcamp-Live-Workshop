@@ -4,6 +4,7 @@ import com.emranhss.hotebooking.entity.User;
 import com.emranhss.hotebooking.repository.TokenRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class JwtService {
 
         return Jwts
                 .parser()
-                .setSigningKey(getsigningKey())
+                .setSigningKey(getSigningKey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
@@ -34,7 +35,7 @@ public class JwtService {
     }
 
 
-    private SecretKey getsigningKey(){
+    private SecretKey getSigningKey(){
 
         byte[] keyBytes= Decoders.BASE64URL.decode(SECURITY_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
@@ -42,14 +43,14 @@ public class JwtService {
     }
 
 
-    public String genarateToken(User user){
+    public String generateToken(User user){
         return Jwts
                 .builder()
                 .setSubject(user.getEmail()) // Set Email as Subject
                 .claim("role", user.getRole()) // Add user Role to Payload
                 .setIssuedAt(new Date(System.currentTimeMillis())) // Set Token issue ime
                 .setExpiration(new Date(System.currentTimeMillis()+24*60*60*1000)) // Set Token Expire Time
-                .signWith(getsigningKey()) // Sign the Token with Secreat key
+                .signWith(getSigningKey()) // Sign the Token with Secreat key
                 .compact(); // Build and Compacts the token into String
 
     }
