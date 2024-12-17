@@ -23,6 +23,7 @@ public class JwtService {
     private final String SECURITY_KEY="d169552a202ace4ed9b31a326df08aemran3e197a10213030f7c4be596ba99b6";
 
 
+    // get all part from token
     private Claims extractAllClaims(String token){
 
         return Jwts
@@ -78,17 +79,17 @@ public class JwtService {
 
         String userName=extractUserName(token);
 
-        boolean validToke=tokenRepository
+        boolean validToken=tokenRepository
                 .findByToken(token)
                 .map(t -> !t.isLogout())
                 .orElse(false);
 
-        return (userName.equals(user.getUsername()) && !isTokenExpired(token) && validToke);
+        return (userName.equals(user.getUsername()) && !isTokenExpired(token) && validToken);
 
      }
 
 
-     // Extract a specific Claim from the Token Caims
+     // Extract a specific Claim from the Token Claims
      public <T> T extractClaim(String token, Function<Claims, T> resolver){
 
         Claims claims=extractAllClaims(token);
