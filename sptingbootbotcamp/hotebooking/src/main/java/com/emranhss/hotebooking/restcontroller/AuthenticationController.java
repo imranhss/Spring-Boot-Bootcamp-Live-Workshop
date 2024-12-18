@@ -32,7 +32,7 @@ public class AuthenticationController {
         String response= authService.activeUser(id);
         return  ResponseEntity.ok(response);
     }
-    
+
 
 
 }
