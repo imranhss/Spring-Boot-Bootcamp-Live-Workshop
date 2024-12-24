@@ -1,7 +1,7 @@
-package com.emranhss.hotebooking.security;
+package com.example.Spring.Security.Learn.securityconfig;
 
-import com.emranhss.hotebooking.jwt.JwtAuthenticationFilter;
-import com.emranhss.hotebooking.service.UserService;
+import com.example.Spring.Security.Learn.jwt.JwtAuthenticationFilter;
+import com.example.Spring.Security.Learn.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,32 +27,31 @@ public class SecurityConfig {
     private JwtAuthenticationFilter authenticationFilter;
 
 
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return
-                http
-                        .csrf(AbstractHttpConfigurer::disable)
-                        .cors(Customizer.withDefaults())
-                        .authorizeHttpRequests(
-                                req->
-                                        req.requestMatchers("/login", "/register", "/images/**", "/api/hotel/","/active/**")
-                                                .permitAll()
-                                                .requestMatchers("/api/hotel/save")
-                                                .hasAnyAuthority("HOTEL", "ADMIN")
-                                                .requestMatchers("/api/hotel/h/searchhotel")
-                                                .hasAuthority("USER")
-                        )
-                        .userDetailsService(userService)
-                        .sessionManagement(
-                                session->
-                                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                        )
-                        .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                        .build();
+
+return http
+        .csrf(AbstractHttpConfigurer::disable)
+        .cors(Customizer.withDefaults())
+        .authorizeHttpRequests(
+                req -> req.requestMatchers("/login", "/register", "/images/**", "/active/**")
+                        .permitAll()
+                        .requestMatchers("/api/hotel/save")
+                        .hasAuthority("HOTEL")
+                        .requestMatchers("/api/hotel/")
+                        .hasAnyAuthority("USER","ADMIN", "HOTEL")
+                        .requestMatchers("/api/hotel/**")
+                        .hasAuthority("ADMI")
+        )
+        .userDetailsService(userService)
+        .sessionManagement(
+                session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        )
+        .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
+        .build();
 
     }
-
 
 
     @Bean

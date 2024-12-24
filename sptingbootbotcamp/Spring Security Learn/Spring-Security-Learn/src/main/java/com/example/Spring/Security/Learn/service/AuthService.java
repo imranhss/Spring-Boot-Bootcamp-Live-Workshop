@@ -1,16 +1,15 @@
-package com.emranhss.hotebooking.service;
+package com.example.Spring.Security.Learn.service;
 
-import com.emranhss.hotebooking.entity.AuthenticationResponse;
-import com.emranhss.hotebooking.entity.Role;
-import com.emranhss.hotebooking.entity.Token;
-import com.emranhss.hotebooking.entity.User;
-import com.emranhss.hotebooking.jwt.JwtService;
-import com.emranhss.hotebooking.repository.TokenRepository;
-import com.emranhss.hotebooking.repository.UserRepository;
+import com.example.Spring.Security.Learn.entity.AuthenticationResponse;
+import com.example.Spring.Security.Learn.entity.Role;
+import com.example.Spring.Security.Learn.entity.Token;
+import com.example.Spring.Security.Learn.entity.User;
+import com.example.Spring.Security.Learn.jwt.JwtService;
+import com.example.Spring.Security.Learn.repoeitoty.TokenRepository;
+import com.example.Spring.Security.Learn.repoeitoty.UserRepository;
 import jakarta.mail.MessagingException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +17,6 @@ import java.util.List;
 
 @Service
 public class AuthService {
-
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -38,6 +36,7 @@ public class AuthService {
     }
 
 
+
     private void saveUserToken(String jwt, User user) {
         Token token = new Token();
         token.setToken(jwt);
@@ -47,6 +46,7 @@ public class AuthService {
         tokenRepository.save(token);
 
     }
+
 
     private void removeAllTokenByUser(User user) {
 
@@ -65,6 +65,7 @@ public class AuthService {
 
 
     public AuthenticationResponse register(User user) {
+
         // We check that Already any user Exists with this email
         if(userRepository.findByEmail(user.getEmail()).isPresent()){
 
@@ -90,24 +91,6 @@ public class AuthService {
         return new AuthenticationResponse(jwt, "User Registration was Successful");
     }
 
-    private void sendActivationEmail(User user) {
-
-        String activationLink="http://localhost:8089/active/"+user.getId();
-        String mailText = "<h2>Dear " + user.getName() + ",</h2>"
-                + "<p>Please click on the following link to confirm your registration:</p>"
-                + "<a href=\"" + activationLink + "\">Activate Account</a>";
-        String subject="Confirm Registration";
-        try{
-            emailService.sendSimpleEmail(user.getEmail(), subject, mailText);
-        }
-        catch (MessagingException e){
-           throw  new RuntimeException();
-
-        }
-
-
-
-    }
 
 
     public  AuthenticationResponse authencate(User request){
@@ -134,6 +117,7 @@ public class AuthService {
     }
 
 
+
     public  String activeUser(long id){
 
         User user=userRepository.findById(id)
@@ -152,6 +136,26 @@ public class AuthService {
 
 
 
+
+    private void sendActivationEmail(User user) {
+
+        String activationLink="http://localhost:8089/active/"+user.getId();
+
+        String mailText = "<h2>Dear " + user.getName() + ",</h2>"
+                + "<p>Please click on the following link to confirm your registration:</p>"
+                + "<a href=\"" + activationLink + "\">Activate Account</a>";
+        String subject="Confirm Registration";
+        try{
+            emailService.sendSimpleEmail(user.getEmail(), subject, mailText);
+        }
+        catch (MessagingException e){
+            throw  new RuntimeException();
+
+        }
+
+
+
+    }
 
 
 }
