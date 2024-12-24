@@ -38,10 +38,13 @@ return http
                         .permitAll()
                         .requestMatchers("/api/hotel/save")
                         .hasAuthority("HOTEL")
+                        .requestMatchers("/api/test/**")
+                        .hasAuthority("USER")
                         .requestMatchers("/api/hotel/")
                         .hasAnyAuthority("USER","ADMIN", "HOTEL")
                         .requestMatchers("/api/hotel/**")
                         .hasAuthority("ADMI")
+
         )
         .userDetailsService(userService)
         .sessionManagement(

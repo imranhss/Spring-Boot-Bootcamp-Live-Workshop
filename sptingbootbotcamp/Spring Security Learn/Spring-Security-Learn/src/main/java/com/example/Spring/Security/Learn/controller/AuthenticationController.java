@@ -1,4 +1,4 @@
-package com.example.Spring.Security.Learn;
+package com.example.Spring.Security.Learn.controller;
 
 import com.example.Spring.Security.Learn.entity.AuthenticationResponse;
 import com.example.Spring.Security.Learn.entity.User;
