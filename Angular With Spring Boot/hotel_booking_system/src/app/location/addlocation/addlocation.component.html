@@ -1,0 +1,13 @@
+<div class="container">
+  <form [formGroup]="formGroup"  (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+    <label for="name">Location Name</label>
+    <input id="name" formControlName="name" type="text" />
+  
+    <label for="file">Upload Image</label>
+    <input id="file" type="file" (change)="onFileSelected($event)" />
+  
+    <button type="submit" [disabled]="formGroup.invalid">Submit</button>
+  </form>
+
+</div>
+  
