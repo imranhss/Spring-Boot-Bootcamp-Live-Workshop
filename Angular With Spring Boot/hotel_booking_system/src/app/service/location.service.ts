@@ -29,7 +29,7 @@ export class LocationService {
 
 
  // get all location
- getAllLocation(){
+ getAllLocation(): Observable<any>{
 
   return this.httpClient.get(this.baseUrl);
  }

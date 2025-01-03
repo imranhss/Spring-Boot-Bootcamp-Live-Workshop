@@ -1,12 +1,24 @@
-<div class="container">
+<div class="container mt-3">
   <form [formGroup]="formGroup"  (ngSubmit)="onSubmit()" enctype="multipart/form-data">
-    <label for="name">Location Name</label>
-    <input id="name" formControlName="name" type="text" />
+
+    <div class="mb-3">
+      <label for="name">Location Name</label>
+      <input type="email" formControlName="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      
+    </div>
+
+    
+   
+
+    <div class="mb-3">
+      <label for="file">Upload Image</label>
+      <input type="file" (change)="onFileSelected($event)" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      
+    </div>
+
+    
   
-    <label for="file">Upload Image</label>
-    <input id="file" type="file" (change)="onFileSelected($event)" />
-  
-    <button type="submit" [disabled]="formGroup.invalid">Submit</button>
+    <button class="btn btn-primary" type="submit" [disabled]="formGroup.invalid">Submit</button>
   </form>
 
 </div>
