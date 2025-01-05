@@ -1,1 +1,74 @@
-<p>addhotel works!</p>
+<div class="container mt-4">
+
+    <form [formGroup]="formGroup"  (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+
+    <div class="form-group">
+        <label>Name</label>
+        <input type="text" class="form-control" formControlName="name" required>
+        <div *ngIf="formGroup.get('name')?.invalid && formGroup.get('name')?.touched" class="text-danger">
+            Hotel Name is Required
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Address</label>
+        <input type="text" class="form-control" formControlName="address" required>
+        <div *ngIf="formGroup.get('address')?.invalid && formGroup.get('address')?.touched" class="text-danger">
+            Hotel Address is Required
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Maximum Price</label>
+        <input type="text" class="form-control" formControlName="maximumPrice" required>
+        <div *ngIf="formGroup.get('maximumPrice')?.invalid && formGroup.get('maximumPrice')?.touched"
+            class="text-danger">
+            Maximum Price is Required
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Minimum Price</label>
+        <input type="text" class="form-control" formControlName="minimumPrice" required>
+        <div *ngIf="formGroup.get('minimumPrice')?.invalid && formGroup.get('minimumPrice')?.touched"
+            class="text-danger">
+            Minimum Price is Required
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Rating</label>
+        <input type="text" class="form-control" formControlName="rating" required>
+        <div *ngIf="formGroup.get('rating')?.invalid && formGroup.get('rating')?.touched" class="text-danger">
+            Rating must be between 0 to 5
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label>Location</label>
+        <select formControlName="location" required>
+            <option [ngValue]="l.id" *ngFor="let l of locations">{{l.name}}</option>
+        </select>
+        <div *ngIf="formGroup.get('location')?.invalid && formGroup.get('location')?.touched" class="text-danger">
+            Select a location
+        </div>
+
+    </div>
+
+    <div class="mb-3">
+
+        <label for="file">Upload Image</label>
+        <input type="file" (change)="onFileSelected($event)" class="form-control" id="exampleInputEmail1"
+            aria-describedby="emailHelp">
+
+            <div *ngIf="!image" class="text-danger">
+                Select a Image
+            </div>
+
+
+    </div>
+
+    <button class="btn btn-primary" type="submit" [disabled]="formGroup.invalid">Submit</button>
+
+
+</form>
+
+
+</div>
