@@ -43,7 +43,7 @@
 
     <div class="mb-3">
         <label>Location</label>
-        <select formControlName="location" required>
+        <select formControlName="location" class="form-select" required>
             <option [ngValue]="l.id" *ngFor="let l of locations">{{l.name}}</option>
         </select>
         <div *ngIf="formGroup.get('location')?.invalid && formGroup.get('location')?.touched" class="text-danger">
@@ -52,7 +52,8 @@
 
     </div>
 
-    <div class="mb-3">
+    
+    <div class="form-group">
 
         <label for="file">Upload Image</label>
         <input type="file" (change)="onFileSelected($event)" class="form-control" id="exampleInputEmail1"
@@ -65,7 +66,7 @@
 
     </div>
 
-    <button class="btn btn-primary" type="submit" [disabled]="formGroup.invalid">Submit</button>
+    <button class="btn btn-primary bt-3" type="submit" [disabled]="formGroup.invalid">Submit</button>
 
 
 </form>

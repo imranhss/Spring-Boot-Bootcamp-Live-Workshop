@@ -28,6 +28,7 @@ export class AddhotelComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.loadLocation();
 
 
      this.formGroup = this.formBuilder.group({

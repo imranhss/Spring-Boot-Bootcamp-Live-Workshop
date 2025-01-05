@@ -41,10 +41,10 @@ public class SecurityConfig {
                         .cors(Customizer.withDefaults())
                         .authorizeHttpRequests(
                                 req->
-                                        req.requestMatchers("/login", "/register", "/images/**", "/api/hotel/","/active/**","/api/location/**")
+                                        req.requestMatchers("/login", "/register","/api/hotel/save", "/images/**", "/api/hotel/","/active/**","/api/location/**")
                                                 .permitAll()
-                                                .requestMatchers("/api/hotel/save")
-                                                .hasAnyAuthority("HOTEL", "ADMIN")
+//                                                .requestMatchers("")
+//                                                .hasAnyAuthority("HOTEL", "ADMIN")
                                                 .requestMatchers("/api/hotel/h/searchhotel")
                                                 .hasAuthority("USER")
                         )
